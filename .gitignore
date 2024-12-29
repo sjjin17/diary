@@ -283,7 +283,7 @@ dist
 docs/_book
 
 # TODO: where does this rule come from?
-test/
+#test/
 
 ### Vuejs ###
 # Recommended template: Node.gitignore
@@ -346,6 +346,7 @@ gradle-app.setting
 *.hprof
 
 application.yml
+application-oauth.yml
 
 
 # End of https://www.toptal.com/developers/gitignore/api/vue,node,java,redis,vuejs,gradle,windows,intellij+all,visualstudiocode
