@@ -29,7 +29,7 @@ public class RestTemplateConfig {
     HttpClient httpClient() {
         return HttpClientBuilder.create()
                 .setConnectionManager(createHttpConnectionManager())
-                .evictIdleConnections(TimeValue.of(10, TimeUnit.SECONDS)) //서버에서 keepalive시간동안 미 사용한 커넥션을 죽이는 등의 케이스 방어로 idle커넥션을 주기적으로 지움
+                .evictIdleConnections(TimeValue.of(10, TimeUnit.SECONDS))
                 .build();
 
     }
@@ -38,7 +38,7 @@ public class RestTemplateConfig {
     HttpClientConnectionManager createHttpConnectionManager() {
         return PoolingHttpClientConnectionManagerBuilder.create()
                 .setDefaultConnectionConfig(ConnectionConfig.custom()
-                        .setSocketTimeout(5000, TimeUnit.MILLISECONDS)  // 읽기 시간 타임아웃
+                        .setSocketTimeout(5000, TimeUnit.MILLISECONDS) 
                         .setConnectTimeout(3000, TimeUnit.MILLISECONDS)
                         .build())
                 .setMaxConnTotal(100)

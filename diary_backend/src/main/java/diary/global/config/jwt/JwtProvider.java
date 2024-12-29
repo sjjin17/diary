@@ -8,6 +8,7 @@ import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
@@ -19,21 +20,24 @@ import java.util.Date;
 @RequiredArgsConstructor
 public class JwtProvider {
 
-    private String secretKey = "000000000000000000000000myDiarySecretKey202412171648000000000000000";
-    private static final long EXPIRATION_TIME = 1000 * 60 * 60 * 12;  // 12 시간
-    private long ACCESS_TOKEN_EXPIRE_TIME;  // ? 이름 규칙 다시 찾아보기
-    private long REFRESH_TOKEN_EXPIRE_TIME = 1000 * 60 * 60 * 7;  // 7일 보통은 어떻게 하는지 모르곘음 찾아봐야 함
+    @Value("${jwt.secret-key}")
+    private String SECRET_KEY;
 
-    private final UserRepository userRepository;
+    @Value("${jwt.expire-time.access-token}")
+    private long ACCESS_TOKEN_EXPIRE_TIME;
+
+    @Value("${jwt.expire-time.refresh-token}")
+    private long REFRESH_TOKEN_EXPIRE_TIME;
+
 
     private SecretKey getKey() {
-        return Keys.hmacShaKeyFor(Decoders.BASE64.decode(secretKey));
+        return Keys.hmacShaKeyFor(Decoders.BASE64.decode(SECRET_KEY));
     }
 
 
     public String generateAccessToken(User user) {
         Date now = new Date();
-        final Date expiration = new Date(now.getTime() + EXPIRATION_TIME);
+        final Date expiration = new Date(now.getTime() + ACCESS_TOKEN_EXPIRE_TIME);
         return Jwts.builder()
                 .header()
                 .type("JWT")
