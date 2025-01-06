@@ -93,7 +93,6 @@ public class GoogleLoginStrategy implements LoginStrategy {
         String responseBody = response.getBody();
         ObjectMapper objectMapper = new ObjectMapper();
         JsonNode jsonNode = objectMapper.readTree(responseBody);
-        System.out.println(jsonNode);
         return SocialUserInfo.builder()
                 .socialId(jsonNode.get("id").asText())
                 .email(jsonNode.get("email").asText())

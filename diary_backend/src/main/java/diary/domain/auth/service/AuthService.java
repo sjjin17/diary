@@ -29,13 +29,14 @@ public class AuthService {
     public TokenResponseDto login(String code, String provider) throws JsonProcessingException {
         LoginStrategy loginStrategy = loginStrategyMap.get(provider);
         SocialUserInfo socialUserInfo = loginStrategy.login(code, SocialType.valueOf(provider));
+        String refreshToken = jwtProvider.generateRefreshToken();
         User user = userRepository.findBySocialIdAndSocialType(socialUserInfo.socialId(), socialUserInfo.socialType()).orElse(null);
         if (user == null) {
-            user = userService.join(socialUserInfo.socialId(), socialUserInfo.email(), socialUserInfo.name(), socialUserInfo.imageUrl(), socialUserInfo.socialType());
+            user = userService.join(socialUserInfo, refreshToken);
         }
         return TokenResponseDto.builder()
                 .accessToken(jwtProvider.generateAccessToken(user))
-                .refreshToken(jwtProvider.generateRefreshToken())
+                .refreshToken(refreshToken)
                 .build();
     }
 

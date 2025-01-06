@@ -1,5 +1,6 @@
 package diary.domain.user.service;
 
+import diary.domain.auth.dto.SocialUserInfo;
 import diary.domain.user.domain.SocialType;
 import diary.domain.user.domain.User;
 import diary.domain.user.repository.UserRepository;
@@ -13,17 +14,16 @@ public class UserService {
     private final UserRepository userRepository;
     private final JwtProvider jwtProvider;
 
-    public User join(String socialId, String email, String username, String imageUrl, SocialType socialType) {
+    public User join(SocialUserInfo socialUserInfo, String refreshToken) {
         User user = User.builder()
-                .socialId(socialId)
-                .email(email)
-                .username(username)
-                .imageUrl(imageUrl)
-                .socialType(socialType)
-                .refreshToken(jwtProvider.generateRefreshToken())
+                .socialId(socialUserInfo.socialId())
+                .email(socialUserInfo.email())
+                .username(socialUserInfo.name())
+                .imageUrl(socialUserInfo.imageUrl())
+                .socialType(socialUserInfo.socialType())
+                .refreshToken(refreshToken)
                 .build();
-        userRepository.save(user);
-        return user;
+        return userRepository.save(user);
     }
 
 }
