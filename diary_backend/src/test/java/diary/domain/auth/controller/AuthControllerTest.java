@@ -2,6 +2,7 @@ package diary.domain.auth.controller;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
 import diary.domain.auth.dto.SocialUserInfo;
+import diary.domain.auth.dto.Token;
 import diary.domain.auth.dto.response.TokenResponseDto;
 import diary.domain.auth.service.AuthService;
 import diary.domain.user.domain.SocialType;
@@ -21,10 +22,9 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.test.web.servlet.assertj.MockMvcTester;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import org.springframework.test.web.servlet.request.RequestPostProcessor;
 
+
+import static org.hamcrest.Matchers.containsString;
 import static org.mockito.Mockito.*;
 import static org.mockito.BDDMockito.given;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -54,7 +54,6 @@ class AuthControllerTest {
     @Test
     @WithMockUser(username="user")
     void 로그인_성공() throws Exception {
-
         // given
         String code = "authorizationCode";
         String provider = "GOOGLE";
@@ -68,7 +67,7 @@ class AuthControllerTest {
                 .socialType(SocialType.GOOGLE)
                 .build();
         given(authService.login(code, provider)).willReturn(
-                TokenResponseDto.builder()
+                Token.builder()
                         .accessToken(accessToken)
                         .refreshToken(refreshToken)
                         .build()
@@ -81,9 +80,10 @@ class AuthControllerTest {
                         .param("provider", provider))
                         .andExpect(status().isOk())
                         .andExpect(content().contentType("application/json;charset=UTF-8"))
+
                         .andExpect(jsonPath("$.data.accessToken").value(accessToken))
-                        .andExpect(jsonPath("$.data.refreshToken").value(refreshToken))
-                        .andExpect(jsonPath("$.success").value(true));
+                        .andExpect(jsonPath("$.success").value(true))
+                        .andExpect(header().string("Set-Cookie", containsString("refreshToken="+refreshToken)));
 
         // then
         resultActions.andDo(document("login",  preprocessResponse(prettyPrint()),
@@ -94,13 +94,11 @@ class AuthControllerTest {
                 responseFields(
                         fieldWithPath("data").type(JsonFieldType.OBJECT).description("응답 데이터"),
                         fieldWithPath("data.accessToken").type(JsonFieldType.STRING).description("access token"),
-                        fieldWithPath("data.refreshToken").type(JsonFieldType.STRING).description("refresh token"),
                         fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("성공")
-                )
-                ));
+                ))
+        );
 
     }
-
 
 
 

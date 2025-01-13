@@ -2,6 +2,7 @@ package diary.domain.auth.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import diary.domain.auth.dto.SocialUserInfo;
+import diary.domain.auth.dto.Token;
 import diary.domain.auth.dto.response.TokenResponseDto;
 import diary.domain.auth.strategy.GoogleLoginStrategy;
 import diary.domain.auth.strategy.LoginStrategy;
@@ -58,7 +59,10 @@ class AuthServiceTest {
                 .socialType(SocialType.GOOGLE)
                 .build();
         User user = UserFixture.createUser(SocialType.GOOGLE);
-        TokenResponseDto expectedToken = new TokenResponseDto("accessToken", "refreshToken");
+        Token expectedToken = Token.builder()
+                .accessToken("accessToken")
+                .refreshToken("refreshToken")
+                .build();
         LoginStrategy googleLoginStrategy = mock(GoogleLoginStrategy.class);
 
 
@@ -69,7 +73,7 @@ class AuthServiceTest {
         given(jwtProvider.generateRefreshToken()).willReturn("refreshToken");
 
         // When
-        TokenResponseDto token = authService.login("authorizationCode", provider);
+        Token token = authService.login("authorizationCode", provider);
 
 
         // Then
@@ -91,7 +95,10 @@ class AuthServiceTest {
                 .socialType(SocialType.GOOGLE)
                 .build();
         User user = UserFixture.createUser(SocialType.GOOGLE);
-        TokenResponseDto expectedToken = new TokenResponseDto("accessToken", "refreshToken");
+        Token expectedToken = Token.builder()
+                .accessToken("accessToken")
+                .refreshToken("refreshToken")
+                .build();
         LoginStrategy googleLoginStrategy = mock(GoogleLoginStrategy.class);
 
 
@@ -103,7 +110,7 @@ class AuthServiceTest {
         given(jwtProvider.generateRefreshToken()).willReturn("refreshToken");
 
         // When
-        TokenResponseDto token = authService.login("authorizationCode", provider);
+        Token token = authService.login("authorizationCode", provider);
 
 
         // Then
