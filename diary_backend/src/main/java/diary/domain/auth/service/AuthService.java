@@ -9,12 +9,15 @@ import diary.domain.user.domain.User;
 import diary.domain.user.repository.UserRepository;
 import diary.domain.user.service.UserService;
 import diary.global.config.jwt.JwtProvider;
+import diary.global.exception.CustomException;
+import diary.global.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
 import java.util.Map;
+import java.util.Optional;
 
 
 @Service
@@ -38,6 +41,21 @@ public class AuthService {
                 .accessToken(jwtProvider.generateAccessToken(user))
                 .refreshToken(refreshToken)
                 .build();
+    }
+
+    public Token reissue(String refreshToken) {
+        User user = userRepository.findByRefreshToken(refreshToken).orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_EXISTS));
+        String accessToken = jwtProvider.generateAccessToken(user);  // 새로운 access Token 발급
+        if (jwtProvider.checkRefreshTokenExpiration(refreshToken) < (1000 * 60 * 60 * 24 * 3)) {
+            // refresh token 재발급 + refresh token DB 저장
+            refreshToken = jwtProvider.generateRefreshToken();
+            user.updateRefreshToken(refreshToken);
+        }
+        return Token.builder()
+                .accessToken(accessToken)
+                .refreshToken(refreshToken)
+                .build();
+
     }
 
 }

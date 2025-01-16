@@ -7,6 +7,8 @@ import diary.domain.auth.dto.response.TokenResponseDto;
 import diary.domain.auth.service.AuthService;
 import diary.global.api.BasicResponse;
 import diary.global.api.CommonResponse;
+import diary.global.config.jwt.JwtProvider;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -24,6 +26,8 @@ public class AuthController {
     private long EXPIRE_TIME;
     private final AuthService authService;
 
+    private final JwtProvider jwtProvider;
+
 
     @GetMapping("/login")
     public ResponseEntity<? extends BasicResponse> login(@RequestParam String code,@RequestParam String provider, HttpServletResponse response) throws JsonProcessingException {
@@ -40,6 +44,32 @@ public class AuthController {
                 .body(new CommonResponse<>(TokenResponseDto.builder()
                         .accessToken(token.accessToken()).build()));
     }
+
+    @GetMapping("/reissue")
+    public ResponseEntity<? extends BasicResponse> reissueToken(HttpServletRequest request, HttpServletResponse response) {
+        Token token = authService.reissue(jwtProvider.extractRefreshTokenFromCookie(request));
+        ResponseCookie cookie = ResponseCookie.from("refreshToken", token.refreshToken())
+                .maxAge(jwtProvider.checkRefreshTokenExpiration(token.refreshToken()))
+                .path("/")
+                .secure(true)
+                .sameSite("None")
+                .httpOnly(true)
+                .build();
+        response.setHeader("Set-Cookie", cookie.toString());
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(new CommonResponse<>(new TokenResponseDto(token.accessToken())));
+    }
+
+    @GetMapping("/test")
+    public ResponseEntity<? extends BasicResponse> test() {
+
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(new CommonResponse<>("hello"));
+    }
+
+
+
+
 
 
 

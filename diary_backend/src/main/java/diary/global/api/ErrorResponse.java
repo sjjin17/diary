@@ -1,8 +1,10 @@
 package diary.global.api;
 
 import diary.global.exception.ErrorCode;
+import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
+@Getter
 public class ErrorResponse extends BasicResponse{
     private boolean success;
     private int status;

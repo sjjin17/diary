@@ -38,13 +38,14 @@ public class SecurityConfig {
         http
                 .csrf(c -> c.disable())
 
+
+                .authorizeHttpRequests((authorize) -> authorize
+                        .requestMatchers("auth/login", "auth/reissue").permitAll()
+                        .anyRequest().authenticated())
                 .exceptionHandling(
                         httpSecurityExceptionHandlingConfigurer -> httpSecurityExceptionHandlingConfigurer
                                 .authenticationEntryPoint(jwtAuthenticationEntryPoint)
                 )
-                .authorizeHttpRequests((authorize) -> authorize
-                        .requestMatchers("/auth/login").permitAll()
-                        .anyRequest().authenticated())
                 .addFilterBefore(new JwtAuthenticationFilter(jwtProvider), UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(jwtExceptionFilter, JwtAuthenticationFilter.class)
                 .formLogin(AbstractHttpConfigurer::disable)
