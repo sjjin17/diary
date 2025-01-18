@@ -60,12 +60,7 @@ public class AuthController {
                 .body(new CommonResponse<>(new TokenResponseDto(token.accessToken())));
     }
 
-    @GetMapping("/test")
-    public ResponseEntity<? extends BasicResponse> test() {
 
-        return ResponseEntity.status(HttpStatus.OK)
-                .body(new CommonResponse<>("hello"));
-    }
 
 
 

@@ -45,9 +45,8 @@ public class AuthService {
 
     public Token reissue(String refreshToken) {
         User user = userRepository.findByRefreshToken(refreshToken).orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_EXISTS));
-        String accessToken = jwtProvider.generateAccessToken(user);  // 새로운 access Token 발급
+        String accessToken = jwtProvider.generateAccessToken(user);
         if (jwtProvider.checkRefreshTokenExpiration(refreshToken) < (1000 * 60 * 60 * 24 * 3)) {
-            // refresh token 재발급 + refresh token DB 저장
             refreshToken = jwtProvider.generateRefreshToken();
             user.updateRefreshToken(refreshToken);
         }

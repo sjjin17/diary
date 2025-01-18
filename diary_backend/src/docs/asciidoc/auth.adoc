@@ -1,0 +1,14 @@
+[[Auth-API]]
+= Auth API
+
+[[reissue-token]]
+
+==== Request
+
+include::{snippets}/auth/reissue/http-request.adoc[]
+
+
+==== Response
+
+inclue::{snippets}/auth/reissue/http-response.adoc[]
+include::{snippets}/auth/reissue/response-fields.adoc[]
