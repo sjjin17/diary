@@ -80,10 +80,10 @@ task copyDocument(type: Copy) {
 
 bootJar {
 	dependsOn asciidoctor
-	doFirst {
-		delete file('static/docs')
-	}
-	from("${asciidoctor.outputDir}") {
+//	doFirst {
+//		delete file('static/docs')
+//	}
+	from("${asciidoctor.outputDir}/html5") {
 		into 'static/docs'
 	}
 }

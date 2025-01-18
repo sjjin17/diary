@@ -33,7 +33,7 @@ public class AuthController {
     public ResponseEntity<? extends BasicResponse> login(@RequestParam String code,@RequestParam String provider, HttpServletResponse response) throws JsonProcessingException {
         Token token = authService.login(code, provider);
         ResponseCookie cookie = ResponseCookie.from("refreshToken", token.refreshToken())
-                .maxAge(EXPIRE_TIME)
+                .maxAge(EXPIRE_TIME / 1000)
                 .path("/")
                 .secure(true)
                 .sameSite("None")
@@ -49,7 +49,7 @@ public class AuthController {
     public ResponseEntity<? extends BasicResponse> reissueToken(HttpServletRequest request, HttpServletResponse response) {
         Token token = authService.reissue(jwtProvider.extractRefreshTokenFromCookie(request));
         ResponseCookie cookie = ResponseCookie.from("refreshToken", token.refreshToken())
-                .maxAge(jwtProvider.checkRefreshTokenExpiration(token.refreshToken()))
+                .maxAge(jwtProvider.checkRefreshTokenExpiration(token.refreshToken()) / 1000)
                 .path("/")
                 .secure(true)
                 .sameSite("None")

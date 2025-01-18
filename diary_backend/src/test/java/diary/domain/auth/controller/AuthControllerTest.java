@@ -110,7 +110,7 @@ class AuthControllerTest {
                         .andExpect(header().string("Set-Cookie", containsString("refreshToken="+refreshToken)));
 
         // then
-        resultActions.andDo(document("login",  preprocessResponse(prettyPrint()),
+        resultActions.andDo(document("auth/login", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint()),
                 queryParameters(
                         parameterWithName("code").description("인가코드"),
                         parameterWithName("provider").description("소셜")

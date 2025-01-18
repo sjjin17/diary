@@ -40,7 +40,7 @@ public class SecurityConfig {
 
 
                 .authorizeHttpRequests((authorize) -> authorize
-                        .requestMatchers("auth/login", "auth/reissue").permitAll()
+                        .requestMatchers("auth/login", "auth/reissue", "docs/index.html").permitAll()
                         .anyRequest().authenticated())
                 .exceptionHandling(
                         httpSecurityExceptionHandlingConfigurer -> httpSecurityExceptionHandlingConfigurer
