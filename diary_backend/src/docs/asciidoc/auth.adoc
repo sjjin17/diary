@@ -1,0 +1,34 @@
+[[Auth-API]]
+= Auth API
+
+[[login]]
+== 로그인
+
+=== Request
+
+include::{snippets}/auth/login/http-request.adoc[]
+- Query Parameters
+include::{snippets}/auth/login/query-parameters.adoc[]
+
+=== Response
+
+include::{snippets}/auth/login/http-response.adoc[]
+- Response body
+include::{snippets}/auth/login/response-fields.adoc[]
+
+
+
+
+[[reissue-token]]
+== 토큰 재발급
+
+==== Request
+
+include::{snippets}/auth/reissue/http-request.adoc[]
+
+
+==== Response
+
+include::{snippets}/auth/reissue/http-response.adoc[]
+- Response body
+include::{snippets}/auth/reissue/response-fields.adoc[]
