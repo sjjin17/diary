@@ -1,5 +1,6 @@
 package todaktodak.domain.diary.domain;
 
+import lombok.ToString;
 import todaktodak.domain.user.domain.Member;
 import todaktodak.global.common.BaseEntity;
 import jakarta.persistence.*;
@@ -12,6 +13,7 @@ import java.util.List;
 @Entity
 @NoArgsConstructor
 @Getter
+@ToString
 public class Diary extends BaseEntity {
 
     @Id

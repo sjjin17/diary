@@ -16,7 +16,6 @@ public class UserController {
 
     private final UserService userService;
 
-    // 일기장 목록 조회
     @GetMapping("/me/diaries")
     public ResponseEntity<? extends BasicResponse> getAllDiaries(@LoginUser Long userId) {
         return ResponseEntity.status(HttpStatus.OK)

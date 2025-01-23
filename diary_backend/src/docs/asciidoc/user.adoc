@@ -1,0 +1,12 @@
+[[getMyDiary]]
+== 참여중인 일기장 목록 조회
+
+=== Request
+
+include::{snippets}/user/getMyDiary/http-request.adoc[]
+
+=== Response
+
+include::{snippets}/user/getMyDiary/http-response.adoc[]
+- Response body
+include::{snippets}/user/getMyDiary/response-fields.adoc[]

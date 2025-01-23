@@ -21,8 +21,6 @@ public class UserService {
     private final DiaryRepository diaryRepository;
     private final UserRepository userRepository;
 
-    private final MemberRepository memberRepository;
-    private final JwtProvider jwtProvider;
 
 
     public User join(SocialUserInfo socialUserInfo, String refreshToken) {
@@ -39,9 +37,7 @@ public class UserService {
 
     @Transactional(readOnly = true)
     public List<MyDiaryResponseDto> getAllDiary(long userId) {
-        System.out.println(userId);
         List<Diary> diaries = diaryRepository.findALlByMemberList_User_UserId(userId);
-        System.out.println(diaries);
         return diaries.stream().map(MyDiaryResponseDto::from).collect(Collectors.toList());
     }
 
