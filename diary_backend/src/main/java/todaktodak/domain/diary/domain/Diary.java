@@ -8,6 +8,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -30,8 +31,8 @@ public class Diary extends BaseEntity {
     @Column(name="thumbnail")
     private String thumbnail;
 
-    @OneToMany(mappedBy = "diary")
-    private List<Member> memberList;
+    @OneToMany(mappedBy = "diary", cascade = CascadeType.ALL)
+    private List<Member> memberList = new ArrayList<>();
 
 
     @Builder
@@ -39,5 +40,9 @@ public class Diary extends BaseEntity {
         this.title = title;
         this.isShared = isShared;
         this.thumbnail = thumbnail;
+    }
+
+    public void addMember(Member member) {
+        memberList.add(member);
     }
 }
