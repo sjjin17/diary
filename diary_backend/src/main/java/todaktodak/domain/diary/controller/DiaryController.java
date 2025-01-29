@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import todaktodak.domain.diary.dto.request.DiaryRequestDto;
+import todaktodak.domain.diary.dto.request.UpdateDiaryRequestDto;
 import todaktodak.domain.diary.service.DiaryService;
 import todaktodak.global.api.BasicResponse;
 import todaktodak.global.api.CommonResponse;
@@ -26,6 +27,12 @@ public class DiaryController {
     public ResponseEntity<? extends BasicResponse> createDiary(@LoginUser Long userId, @RequestPart(value="diaryRequestDto") DiaryRequestDto diaryRequestDto, @RequestPart(value="image") MultipartFile thumbnail) throws IOException {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(new CommonResponse<>(diaryService.createDiary(userId, diaryRequestDto, thumbnail)));
+    }
+
+    @PutMapping("/{diaryId}")
+    public ResponseEntity<? extends BasicResponse> updateDiary(@LoginUser Long userId, @PathVariable Long diaryId, @RequestPart(value="updateDiaryRequestDto") UpdateDiaryRequestDto updateDiaryRequestDto, @RequestPart(value="image") MultipartFile thumbnail) throws IOException {
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(new CommonResponse<>(diaryService.updateDiary(userId, diaryId, updateDiaryRequestDto, thumbnail)));
     }
 
 

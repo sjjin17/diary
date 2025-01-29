@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import todaktodak.domain.diary.domain.Diary;
 import todaktodak.domain.diary.dto.request.DiaryRequestDto;
+import todaktodak.domain.diary.dto.request.UpdateDiaryRequestDto;
 import todaktodak.domain.diary.dto.response.DiaryDetailResponseDto;
 import todaktodak.domain.diary.repository.DiaryRepository;
 import todaktodak.domain.user.domain.Member;
@@ -18,6 +19,7 @@ import todaktodak.global.exception.CustomException;
 import todaktodak.global.exception.ErrorCode;
 
 import java.io.IOException;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -44,5 +46,17 @@ public class DiaryService {
 
     }
 
+    public DiaryDetailResponseDto updateDiary(Long userId, Long diaryId, UpdateDiaryRequestDto updateDiaryRequestDto, MultipartFile image) throws IOException {
+        if (!memberRepository.existsMemberByUserUserIdAndDiaryDiaryId(userId, diaryId)) {
+            throw new CustomException(ErrorCode.NO_ACCESS);
+        }
+        Diary diary = diaryRepository.findById(diaryId).orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_DIARY));
+        s3Service.deleteFile(diary.getThumbnail(), S3SaveDir.DIARY);
+
+        String imageName = UUID.randomUUID().toString() + "_" + image.getOriginalFilename();
+        String imageUrl = s3Service.uploadFile(image, S3SaveDir.DIARY, imageName);
+        diary.updateDiary(updateDiaryRequestDto.getTitle(), imageUrl);
+        return DiaryDetailResponseDto.from(diary);
+    }
 
 }

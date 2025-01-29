@@ -1,6 +1,7 @@
 package todaktodak.domain.diary.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import todaktodak.domain.diary.domain.Diary;
 import todaktodak.domain.user.domain.Member;
@@ -8,6 +9,7 @@ import todaktodak.domain.user.domain.Member;
 import java.util.List;
 
 @Getter
+@AllArgsConstructor
 public class DiaryRequestDto {
 
     private String title;

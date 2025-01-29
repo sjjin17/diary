@@ -45,4 +45,9 @@ public class Diary extends BaseEntity {
     public void addMember(Member member) {
         memberList.add(member);
     }
+
+    public void updateDiary(String title, String thumbnail) {
+        this.title = title;
+        this.thumbnail = thumbnail;
+    }
 }

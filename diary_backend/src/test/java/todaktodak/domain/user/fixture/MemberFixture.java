@@ -9,8 +9,6 @@ public class MemberFixture {
         return Member.builder()
                 .diary(diary)
                 .user(user)
-                .turn(1)
-                .isHost(true)
                 .build();
 
     }
