@@ -46,6 +46,10 @@ public class Diary extends BaseEntity {
         memberList.add(member);
     }
 
+    public void removeMember(Member member) {
+        memberList.remove(member);
+    }
+
     public void updateDiary(String title, String thumbnail) {
         this.title = title;
         this.thumbnail = thumbnail;

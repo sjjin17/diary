@@ -59,4 +59,18 @@ public class DiaryService {
         return DiaryDetailResponseDto.from(diary);
     }
 
+    public Long exitDiary(Long userId, Long diaryId) {
+        if (!memberRepository.existsMemberByUserUserIdAndDiaryDiaryId(userId, diaryId)) {
+            throw new CustomException(ErrorCode.NO_ACCESS);
+        }
+        Diary diary = diaryRepository.findById(diaryId).orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_DIARY));
+        if (diary.getMemberList().size() >= 2) {
+            diary.removeMember(memberRepository.findByUserUserId(userId));
+            memberRepository.deleteByUserUserIdAndDiaryDiaryId(userId, diaryId);
+        } else {
+            diaryRepository.deleteById(diaryId);
+        }
+        return diaryId;
+    }
+
 }

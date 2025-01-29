@@ -35,6 +35,13 @@ public class DiaryController {
                 .body(new CommonResponse<>(diaryService.updateDiary(userId, diaryId, updateDiaryRequestDto, thumbnail)));
     }
 
+    @DeleteMapping("/{diaryId}")
+    public ResponseEntity<? extends BasicResponse> exitDiary(@LoginUser Long userId, @PathVariable Long diaryId) {
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(new CommonResponse<>(diaryService.exitDiary(userId, diaryId)));
+    }
+
+
 
 
 }
