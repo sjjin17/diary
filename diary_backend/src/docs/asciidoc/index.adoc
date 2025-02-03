@@ -10,3 +10,4 @@ endif::[]
 :sectlinks:
 
 include::auth.adoc[]
+include::user.adoc[]
