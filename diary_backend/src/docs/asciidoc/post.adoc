@@ -1,0 +1,17 @@
+[[Post-API]]
+= Post API
+
+[[create-post]]
+== 일기 작성
+
+=== Request
+
+include::{snippets}/post/createPost/http-request.adoc[]
+- Request Body
+include::{snippets}/post/createPost/request-body.adoc[]
+
+=== Response
+
+include::{snippets}/post/createPost/http-response.adoc[]
+- Response body
+include::{snippets}/post/createPost/response-fields.adoc[]

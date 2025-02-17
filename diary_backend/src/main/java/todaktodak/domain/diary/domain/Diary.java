@@ -1,6 +1,7 @@
 package todaktodak.domain.diary.domain;
 
 import lombok.ToString;
+import todaktodak.domain.post.domain.Post;
 import todaktodak.domain.user.domain.Member;
 import todaktodak.global.common.BaseEntity;
 import jakarta.persistence.*;
@@ -34,6 +35,8 @@ public class Diary extends BaseEntity {
     @OneToMany(mappedBy = "diary", cascade = CascadeType.ALL)
     private List<Member> memberList = new ArrayList<>();
 
+    @OneToMany(mappedBy = "diary", cascade = CascadeType.REMOVE)
+    private List<Post> postList = new ArrayList<>();
 
     @Builder
     public Diary(String title, Boolean isShared, String thumbnail) {

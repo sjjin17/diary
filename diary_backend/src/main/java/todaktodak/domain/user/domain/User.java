@@ -1,10 +1,14 @@
 package todaktodak.domain.user.domain;
 
+import todaktodak.domain.post.domain.Post;
 import todaktodak.global.common.BaseEntity;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -33,6 +37,12 @@ public class User extends BaseEntity {
 
     @Column(name="refresh_token")
     private String refreshToken;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+    private List<Member> memberList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+    private List<Post> postList = new ArrayList<>();
 
 
     @Builder
