@@ -21,7 +21,7 @@ public class Diary extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="diary_id")
-    private Long diaryId;
+    private Long id;
 
     @Column(name="title")
     private String title;

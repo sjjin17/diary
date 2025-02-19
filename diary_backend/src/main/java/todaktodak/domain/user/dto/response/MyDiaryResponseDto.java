@@ -24,7 +24,7 @@ public class MyDiaryResponseDto {
 
     public static MyDiaryResponseDto from(Diary diary) {
         return MyDiaryResponseDto.builder()
-                .diaryId(diary.getDiaryId())
+                .diaryId(diary.getId())
                 .title(diary.getTitle())
                 .isShared(diary.getIsShared())
                 .thumbnail(diary.getThumbnail())

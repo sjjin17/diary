@@ -11,7 +11,7 @@ import java.util.List;
 @Getter
 public class DiaryDetailResponseDto {
 
-    private Long diaryId;
+    private Long id;
     private String title;
     private Boolean isShared;
     private String thumbnail;
@@ -20,7 +20,7 @@ public class DiaryDetailResponseDto {
 
     @Builder
     public DiaryDetailResponseDto(Long diaryId, String title, Boolean isShared, String thumbnail) {
-        this.diaryId = diaryId;
+        this.id = diaryId;
         this.title = title;
         this.isShared = isShared;
         this.thumbnail = thumbnail;
@@ -31,7 +31,7 @@ public class DiaryDetailResponseDto {
 
     public static DiaryDetailResponseDto from(Diary diary) {
         return DiaryDetailResponseDto.builder()
-                .diaryId(diary.getDiaryId())
+                .diaryId(diary.getId())
                 .title(diary.getTitle())
                 .isShared(diary.getIsShared())
                 .thumbnail(diary.getThumbnail())

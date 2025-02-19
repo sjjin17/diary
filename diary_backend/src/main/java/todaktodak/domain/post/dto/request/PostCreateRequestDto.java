@@ -35,6 +35,7 @@ public class PostCreateRequestDto {
                 .content(content)
                 .weather(Weather.valueOf(weather))
                 .emotion(Emotion.valueOf(emotion))
+                .isPublished(true)
                 .user(user)
                 .diary(diary)
                 .build();

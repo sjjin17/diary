@@ -1,5 +1,8 @@
 package todaktodak.domain.post.controller;
 
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.Size;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +25,12 @@ public class PostController {
     public ResponseEntity<? extends BasicResponse> createPost(@LoginUser Long userId, @PathVariable Long diaryId, @RequestBody PostCreateRequestDto postCreateRequestDto) {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(new CommonResponse<>(postService.createPost(userId, diaryId, postCreateRequestDto)));
+    }
+
+    @GetMapping("{year}/{month}")
+    public ResponseEntity<? extends BasicResponse> getPostsByMonth(@LoginUser Long userId, @PathVariable Long diaryId, @PathVariable int year, @PathVariable @Min(1) @Max(12) int month) {
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(new CommonResponse<>(postService.getPostsByMonth(userId, diaryId, year, month)));
     }
 
 }
