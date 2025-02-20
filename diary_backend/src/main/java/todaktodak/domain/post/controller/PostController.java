@@ -30,11 +30,12 @@ public class PostController {
                 .body(new CommonResponse<>(postService.createPost(userId, diaryId, postCreateRequestDto)));
     }
 
-    @GetMapping("{year}/{month}")
-    public ResponseEntity<? extends BasicResponse> getPostsByMonth(@LoginUser Long userId, @PathVariable Long diaryId, @PathVariable int year, @PathVariable @Min(1) @Max(12) int month) {
+    @GetMapping
+    public ResponseEntity<? extends BasicResponse> getPostsByMonth(@LoginUser Long userId, @PathVariable Long diaryId, @RequestParam int year, @RequestParam @Min(1) @Max(12) int month) {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(new CommonResponse<>(postService.getPostsByMonth(userId, diaryId, year, month)));
     }
+
 
     @PutMapping("/{postId}")
     public ResponseEntity<? extends BasicResponse> updatePost(@LoginUser Long userId, @PathVariable Long diaryId, @PathVariable Long postId, @RequestBody PostUpdateRequestDto postUpdateRequestDto) {
@@ -47,5 +48,7 @@ public class PostController {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(new CommonResponse<>(postService.deletePost(userId, diaryId, postId)));
     }
+
+
 
 }

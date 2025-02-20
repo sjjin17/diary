@@ -130,7 +130,9 @@ class PostControllerTest {
 
         // when
         ResultActions resultActions = mockMvc.perform(
-                get("/diaries/{diaryId}/posts/{year}/{month}", diaryId, year, month)
+                get("/diaries/{diaryId}/posts", diaryId)
+                        .param("year", String.valueOf(year))
+                        .param("month", String.valueOf(month))
                         .header(HttpHeaders.AUTHORIZATION, ACCESS_TOKEN_PREFIX + "accessToken"));
 
         // then
