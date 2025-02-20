@@ -160,7 +160,7 @@ class PostControllerTest {
         Long diaryId = 1L;
         Long postId = 1L;
         PostUpdateRequestDto postUpdateRequest = MOCK_POST_UPDATE_REQUEST;
-        given(postService.updatePost(anyLong(), anyLong(), anyLong(), any(PostUpdateRequestDto.class))).willReturn(diaryId);
+        given(postService.updatePost(anyLong(), anyLong(), anyLong(), any(PostUpdateRequestDto.class))).willReturn(postId);
         ObjectMapper objectMapper = new ObjectMapper();
         String requestJson = objectMapper.writeValueAsString(postUpdateRequest);
 
@@ -182,7 +182,37 @@ class PostControllerTest {
                         )))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json;charset=UTF-8"))
-                .andExpect(jsonPath("$.data").value(1L))
+                .andExpect(jsonPath("$.data").value(postId))
+                .andExpect(jsonPath("$.success").value(true));
+
+    }
+
+    @Test
+    @WithMockCustomUser
+    void 일기_삭제() throws Exception {
+        // given
+        Long diaryId = 1L;
+        Long postId = 1L;
+        given(postService.deletePost(anyLong(), anyLong(), anyLong())).willReturn(postId);
+
+        // when
+        ResultActions resultActions = mockMvc.perform(
+                delete("/diaries/{diaryId}/posts/{postId}", diaryId, postId)
+                        .header(HttpHeaders.AUTHORIZATION, ACCESS_TOKEN_PREFIX + "accessToken")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .with(csrf()));
+
+
+
+        // then
+        resultActions.andDo(document("post/deletePost",  preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint()),
+                        responseFields(
+                                fieldWithPath("data").type(JsonFieldType.NUMBER).description("Post Id"),
+                                fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("성공 여부")
+                        )))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andExpect(jsonPath("$.data").value(postId))
                 .andExpect(jsonPath("$.success").value(true));
 
     }

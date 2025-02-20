@@ -49,6 +49,15 @@ public class PostService {
         return post.getId();
     }
 
+    @Transactional
+    public Long deletePost(Long userId, Long diaryId, Long postId) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_EXISTS));
+        Post post = postRepository.findById(postId).orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_POST));
+        validatePostAuthor(user, post);
+        postRepository.deleteById(postId);
+        return post.getId();
+    }
+
     private void validatePostAuthor(User user, Post post) {
         if (!post.isAuthor(user)) {
             throw new CustomException(ErrorCode.NO_ACCESS);

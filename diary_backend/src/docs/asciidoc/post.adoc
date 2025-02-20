@@ -45,3 +45,14 @@ include::{snippets}/post/updatePost/request-body.adoc[]
 include::{snippets}/post/updatePost/http-response.adoc[]
 - Response body
 include::{snippets}/post/updatePost/response-fields.adoc[]
+
+[[delete-post]]
+== 일기 삭제
+
+=== Request
+include::{snippets}/post/deletePost/http-request.adoc[]
+
+=== Response
+include::{snippets}/post/deletePost/http-response.adoc[]
+- Response body
+include::{snippets}/post/deletePost/response-fields.adoc[]

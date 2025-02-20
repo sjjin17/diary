@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 import todaktodak.domain.post.dto.request.PostCreateRequestDto;
 import todaktodak.domain.post.dto.request.PostUpdateRequestDto;
@@ -39,6 +40,12 @@ public class PostController {
     public ResponseEntity<? extends BasicResponse> updatePost(@LoginUser Long userId, @PathVariable Long diaryId, @PathVariable Long postId, @RequestBody PostUpdateRequestDto postUpdateRequestDto) {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(new CommonResponse<>(postService.updatePost(userId, diaryId, postId, postUpdateRequestDto)));
+    }
+
+    @DeleteMapping("/{postId}")
+    public ResponseEntity<? extends BasicResponse> deletePost(@LoginUser Long userId, @PathVariable Long diaryId, @PathVariable Long postId) {
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(new CommonResponse<>(postService.deletePost(userId, diaryId, postId)));
     }
 
 }
