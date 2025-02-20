@@ -15,3 +15,33 @@ include::{snippets}/post/createPost/request-body.adoc[]
 include::{snippets}/post/createPost/http-response.adoc[]
 - Response body
 include::{snippets}/post/createPost/response-fields.adoc[]
+
+[[get-post-by-month]]
+== 특정 월의 일기 조회
+
+=== Request
+
+include::{snippets}/post/getPostListByMonth/http-request.adoc[]
+
+=== Response
+
+include::{snippets}/post/getPostListByMonth/http-response.adoc[]
+- Response body
+include::{snippets}/post/getPostListByMonth/response-fields.adoc[]
+
+
+[[update-post]]
+== 일기 수정
+
+=== Request
+
+include::{snippets}/post/updatePost/http-request.adoc[]
+
+- Request body
+include::{snippets}/post/updatePost/request-body.adoc[]
+
+=== Response
+
+include::{snippets}/post/updatePost/http-response.adoc[]
+- Response body
+include::{snippets}/post/updatePost/response-fields.adoc[]

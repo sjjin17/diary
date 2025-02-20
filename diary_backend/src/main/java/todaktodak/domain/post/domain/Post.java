@@ -12,6 +12,7 @@ import todaktodak.global.common.BaseEntity;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @NoArgsConstructor
@@ -33,9 +34,11 @@ public class Post extends BaseEntity {
     private String content;
 
     @Column(name = "weather")
+    @Enumerated(EnumType.STRING)
     private Weather weather;
 
     @Column(name = "emotion")
+    @Enumerated(EnumType.STRING)
     private Emotion emotion;
 
     @Column(name = "is_published")
@@ -73,6 +76,15 @@ public class Post extends BaseEntity {
     }
 
 
+    public void updatePost(String weather, String emotion, String title, String content) {
+        this.weather = Weather.valueOf(weather);
+        this.emotion = Emotion.valueOf(emotion);
+        this.title = title;
+        this.content = content;
+    }
 
+    public boolean isAuthor(User user) {
+        return Objects.equals(this.user, user);
+    }
 
 }

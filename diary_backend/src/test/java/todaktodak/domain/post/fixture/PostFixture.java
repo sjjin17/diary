@@ -5,6 +5,7 @@ import todaktodak.domain.post.domain.Emotion;
 import todaktodak.domain.post.domain.Post;
 import todaktodak.domain.post.domain.Weather;
 import todaktodak.domain.post.dto.request.PostCreateRequestDto;
+import todaktodak.domain.post.dto.request.PostUpdateRequestDto;
 import todaktodak.domain.post.dto.response.PostListResponseDto;
 import todaktodak.domain.user.domain.User;
 
@@ -14,6 +15,7 @@ public class PostFixture {
     private static final LocalDate WRITTEN_DATE = LocalDate.parse("2025-02-15");
     private static final String TITLE = "title";
     private static final String CONTENT = "content";
+    private static final String UPDATED_CONTENT = "수정된 content";
     private static final Weather WEATHER = Weather.SNOWY;
     private static final Emotion EMOTION = Emotion.HAPPY;
 
@@ -34,7 +36,14 @@ public class PostFixture {
     }
 
 
-    public static final PostCreateRequestDto MOCK_POST_CREATE_REQUEST = PostCreateRequestDto.builder().writtenDate("2025-02-11").weather("SUNNY").emotion("HAPPY").title("제목").content("내용").build();
+    public static final PostCreateRequestDto MOCK_POST_CREATE_REQUEST =
+            PostCreateRequestDto.builder()
+                    .writtenDate("2025-02-11")
+                    .weather("SUNNY")
+                    .emotion("HAPPY")
+                    .title("제목")
+                    .content("내용")
+                    .build();
 
     public static final PostListResponseDto MOCK_POST_LIST_RESPONSE =
             PostListResponseDto.builder()
@@ -44,4 +53,13 @@ public class PostFixture {
                     .emotion(EMOTION)
                     .isPublished(true)
                     .build();
+
+    public static final PostUpdateRequestDto MOCK_POST_UPDATE_REQUEST =
+            PostUpdateRequestDto.builder()
+                    .weather(WEATHER.name())
+                    .emotion(EMOTION.name())
+                    .title(TITLE)
+                    .content(UPDATED_CONTENT)
+                    .build();
+
 }

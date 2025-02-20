@@ -30,6 +30,7 @@ public class User extends BaseEntity {
     private String username;
 
     @Column(name="social_type")
+    @Enumerated(EnumType.STRING)
     private SocialType socialType;
 
     @Column(name="image_url")

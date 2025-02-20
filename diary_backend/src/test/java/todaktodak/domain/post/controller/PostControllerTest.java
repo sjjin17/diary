@@ -1,6 +1,7 @@
 package todaktodak.domain.post.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.persistence.PostUpdate;
 import org.apache.http.HttpHeaders;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,6 +23,7 @@ import todaktodak.domain.diary.domain.Diary;
 import todaktodak.domain.diary.fixture.DiaryFixture;
 import todaktodak.domain.diary.repository.DiaryRepository;
 import todaktodak.domain.post.dto.request.PostCreateRequestDto;
+import todaktodak.domain.post.dto.request.PostUpdateRequestDto;
 import todaktodak.domain.post.fixture.PostFixture;
 import todaktodak.domain.post.service.PostService;
 import todaktodak.domain.user.domain.SocialType;
@@ -33,13 +35,14 @@ import todaktodak.global.WithMockCustomUser;
 import java.util.List;
 import java.util.Optional;
 
+
 import static org.mockito.BDDMockito.given;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.verify;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
+
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
@@ -47,7 +50,7 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static todaktodak.domain.diary.fixture.DiaryFixture.MOCK_MY_DIARY_RESPONSE_DTO;
-import static todaktodak.domain.post.fixture.PostFixture.MOCK_POST_LIST_RESPONSE;
+import static todaktodak.domain.post.fixture.PostFixture.*;
 
 @WebMvcTest(PostController.class)
 @AutoConfigureRestDocs
@@ -87,7 +90,7 @@ class PostControllerTest {
         // given
         Long userId = 1L;
         Long diaryId = 1L;
-        PostCreateRequestDto postCreateRequest = PostFixture.MOCK_POST_CREATE_REQUEST;
+        PostCreateRequestDto postCreateRequest = MOCK_POST_CREATE_REQUEST;
         given(postService.createPost(anyLong(), anyLong(), any(PostCreateRequestDto.class))).willReturn(1L);
         ObjectMapper objectMapper = new ObjectMapper();
         String requestJson = objectMapper.writeValueAsString(postCreateRequest);
@@ -148,6 +151,40 @@ class PostControllerTest {
                 .andExpect(jsonPath("$.data[0].emotion").value(MOCK_POST_LIST_RESPONSE.getEmotion()))
                 .andExpect(jsonPath("$.data[0].isPublished").value(MOCK_POST_LIST_RESPONSE.getIsPublished()))
                 .andExpect(jsonPath("$.success").value(true));
+    }
+
+    @Test
+    @WithMockCustomUser
+    void 일기_수정_성공() throws Exception {
+        // given
+        Long diaryId = 1L;
+        Long postId = 1L;
+        PostUpdateRequestDto postUpdateRequest = MOCK_POST_UPDATE_REQUEST;
+        given(postService.updatePost(anyLong(), anyLong(), anyLong(), any(PostUpdateRequestDto.class))).willReturn(diaryId);
+        ObjectMapper objectMapper = new ObjectMapper();
+        String requestJson = objectMapper.writeValueAsString(postUpdateRequest);
+
+
+        // when
+        ResultActions resultActions = mockMvc.perform(
+                put("/diaries/{diaryId}/posts/{postId}", diaryId, postId)
+                        .header(HttpHeaders.AUTHORIZATION, ACCESS_TOKEN_PREFIX + "accessToken")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestJson)
+                        .with(csrf()));
+
+
+        // then
+        resultActions.andDo(document("post/updatePost",  preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint()),
+                        responseFields(
+                                fieldWithPath("data").type(JsonFieldType.NUMBER).description("Post Id"),
+                                fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("성공 여부")
+                        )))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andExpect(jsonPath("$.data").value(1L))
+                .andExpect(jsonPath("$.success").value(true));
+
     }
 
 }
