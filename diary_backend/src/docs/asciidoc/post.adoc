@@ -30,6 +30,17 @@ include::{snippets}/post/getPostListByMonth/http-response.adoc[]
 include::{snippets}/post/getPostListByMonth/response-fields.adoc[]
 
 
+[[get-post-by-date]]
+== 특정 날짜의 일기 조회
+
+=== Request
+include::{snippets}/post/getPostListByDate/http-request.adoc[]
+
+=== Response
+include::{snippets}/post/getPostListByDate/http-response.adoc[]
+- Response body
+include::{snippets}/post/getPostListByDate/response-fields.adoc[]
+
 [[update-post]]
 == 일기 수정
 

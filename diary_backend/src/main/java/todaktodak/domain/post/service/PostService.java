@@ -15,6 +15,7 @@ import todaktodak.domain.user.repository.UserRepository;
 import todaktodak.global.exception.CustomException;
 import todaktodak.global.exception.ErrorCode;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -40,6 +41,10 @@ public class PostService {
         return postList.stream().map(post -> PostListResponseDto.of(post)).collect(Collectors.toList());
     }
 
+    public List<PostListResponseDto> getPostsByDate(Long userId, Long diaryId, LocalDate writtenDate) {
+        List<Post> postList = postRepository.findPostsByDiaryIdAndWrittenDate(userId, diaryId, writtenDate);
+        return postList.stream().map(post -> PostListResponseDto.of(post)).collect(Collectors.toList());
+    }
     @Transactional
     public Long updatePost(Long userId, Long diaryId, Long postId, PostUpdateRequestDto requestDto) {
         User user = userRepository.findById(userId).orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_EXISTS));
@@ -63,5 +68,6 @@ public class PostService {
             throw new CustomException(ErrorCode.NO_ACCESS);
         }
     }
+
 
 }

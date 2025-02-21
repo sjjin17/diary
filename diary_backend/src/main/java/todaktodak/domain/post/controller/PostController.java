@@ -5,6 +5,7 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Size;
 import lombok.RequiredArgsConstructor;
 import org.apache.coyote.Response;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.parameters.P;
@@ -16,6 +17,8 @@ import todaktodak.global.api.BasicResponse;
 import todaktodak.global.api.CommonResponse;
 import todaktodak.global.common.BaseEntity;
 import todaktodak.global.common.LoginUser;
+
+import java.time.LocalDate;
 
 @RestController
 @RequiredArgsConstructor
@@ -30,10 +33,16 @@ public class PostController {
                 .body(new CommonResponse<>(postService.createPost(userId, diaryId, postCreateRequestDto)));
     }
 
-    @GetMapping
+    @GetMapping(params = {"year", "month"})
     public ResponseEntity<? extends BasicResponse> getPostsByMonth(@LoginUser Long userId, @PathVariable Long diaryId, @RequestParam int year, @RequestParam @Min(1) @Max(12) int month) {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(new CommonResponse<>(postService.getPostsByMonth(userId, diaryId, year, month)));
+    }
+
+    @GetMapping(params = "date")
+    public ResponseEntity<? extends BasicResponse> getPostsByDate(@LoginUser Long userId, @PathVariable Long diaryId, @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date) {
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(new CommonResponse<>(postService.getPostsByDate(userId, diaryId, date)));
     }
 
 
