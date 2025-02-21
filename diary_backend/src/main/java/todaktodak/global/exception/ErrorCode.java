@@ -17,7 +17,9 @@ public enum ErrorCode {
     NO_ACCESS(HttpStatus.FORBIDDEN, "권한이 없습니다."),
     USER_NOT_EXISTS(HttpStatus.NOT_FOUND, "사용자가 존재하지 않습니다."),
     NOT_FOUND_IMAGE_PATH(HttpStatus.NOT_FOUND, "이미지 경로를 찾을 수 없습니다."),
-    NOT_FOUND_DIARY(HttpStatus.NOT_FOUND, "다이어리를 찾을 수 없습니다.");
+    NOT_FOUND_DIARY(HttpStatus.NOT_FOUND, "다이어리를 찾을 수 없습니다."),
+    NOT_FOUND_POST(HttpStatus.NOT_FOUND, "게시글을 찾을 수 없습니다.");
+
 
 
     private final HttpStatus httpStatus;

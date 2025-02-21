@@ -48,7 +48,7 @@ public class JwtProvider {
                 .header()
                 .type("JWT")
                 .and()
-                .subject(String.valueOf(user.getUserId()))
+                .subject(String.valueOf(user.getId()))
                 .claim("name", user.getUsername())
                 .claim("email", user.getEmail())
                 .claim("imageUrl", user.getImageUrl())

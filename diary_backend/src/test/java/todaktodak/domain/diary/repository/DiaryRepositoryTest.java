@@ -54,7 +54,7 @@ class DiaryRepositoryTest {
 
 
         // when
-        List<Diary> diaryList = diaryRepository.findALlByMemberList_User_UserId(user1.getUserId());
+        List<Diary> diaryList = diaryRepository.findALlByMemberList_User_Id(user1.getId());
 
         // then
         assertThat(diaryList.size()).isEqualTo(3);

@@ -37,7 +37,7 @@ public class UserService {
 
     @Transactional(readOnly = true)
     public List<MyDiaryResponseDto> getAllDiary(long userId) {
-        List<Diary> diaries = diaryRepository.findALlByMemberList_User_UserId(userId);
+        List<Diary> diaries = diaryRepository.findALlByMemberList_User_Id(userId);
         return diaries.stream().map(MyDiaryResponseDto::from).collect(Collectors.toList());
     }
 

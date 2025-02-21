@@ -47,7 +47,7 @@ public class DiaryService {
     }
 
     public DiaryDetailResponseDto updateDiary(Long userId, Long diaryId, UpdateDiaryRequestDto updateDiaryRequestDto, MultipartFile image) throws IOException {
-        if (!memberRepository.existsMemberByUserUserIdAndDiaryDiaryId(userId, diaryId)) {
+        if (!memberRepository.existsMemberByUserIdAndDiaryId(userId, diaryId)) {
             throw new CustomException(ErrorCode.NO_ACCESS);
         }
         Diary diary = diaryRepository.findById(diaryId).orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_DIARY));
@@ -60,13 +60,13 @@ public class DiaryService {
     }
 
     public Long exitDiary(Long userId, Long diaryId) {
-        if (!memberRepository.existsMemberByUserUserIdAndDiaryDiaryId(userId, diaryId)) {
+        if (!memberRepository.existsMemberByUserIdAndDiaryId(userId, diaryId)) {
             throw new CustomException(ErrorCode.NO_ACCESS);
         }
         Diary diary = diaryRepository.findById(diaryId).orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_DIARY));
         if (diary.getMemberList().size() >= 2) {
-            diary.removeMember(memberRepository.findByUserUserId(userId));
-            memberRepository.deleteByUserUserIdAndDiaryDiaryId(userId, diaryId);
+            diary.removeMember(memberRepository.findByUserId(userId));
+            memberRepository.deleteByUserIdAndDiaryId(userId, diaryId);
         } else {
             diaryRepository.deleteById(diaryId);
         }

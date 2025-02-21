@@ -1,0 +1,69 @@
+[[Post-API]]
+= Post API
+
+[[create-post]]
+== 일기 작성
+
+=== Request
+
+include::{snippets}/post/createPost/http-request.adoc[]
+- Request Body
+include::{snippets}/post/createPost/request-body.adoc[]
+
+=== Response
+
+include::{snippets}/post/createPost/http-response.adoc[]
+- Response body
+include::{snippets}/post/createPost/response-fields.adoc[]
+
+[[get-post-by-month]]
+== 특정 월의 일기 조회
+
+=== Request
+
+include::{snippets}/post/getPostListByMonth/http-request.adoc[]
+
+=== Response
+
+include::{snippets}/post/getPostListByMonth/http-response.adoc[]
+- Response body
+include::{snippets}/post/getPostListByMonth/response-fields.adoc[]
+
+
+[[get-post-by-date]]
+== 특정 날짜의 일기 조회
+
+=== Request
+include::{snippets}/post/getPostListByDate/http-request.adoc[]
+
+=== Response
+include::{snippets}/post/getPostListByDate/http-response.adoc[]
+- Response body
+include::{snippets}/post/getPostListByDate/response-fields.adoc[]
+
+[[update-post]]
+== 일기 수정
+
+=== Request
+
+include::{snippets}/post/updatePost/http-request.adoc[]
+
+- Request body
+include::{snippets}/post/updatePost/request-body.adoc[]
+
+=== Response
+
+include::{snippets}/post/updatePost/http-response.adoc[]
+- Response body
+include::{snippets}/post/updatePost/response-fields.adoc[]
+
+[[delete-post]]
+== 일기 삭제
+
+=== Request
+include::{snippets}/post/deletePost/http-request.adoc[]
+
+=== Response
+include::{snippets}/post/deletePost/http-response.adoc[]
+- Response body
+include::{snippets}/post/deletePost/response-fields.adoc[]

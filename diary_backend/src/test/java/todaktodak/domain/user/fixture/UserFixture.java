@@ -4,8 +4,8 @@ import todaktodak.domain.user.domain.SocialType;
 import todaktodak.domain.user.domain.User;
 
 public class UserFixture {
-
     private static final String SOCIAL_ID = "1234";
+
     private static final String EMAIL = "user@test.com";
     private static final String NAME = "username";
     private static final String IMG_URL = "profileImgUrl";
