@@ -48,6 +48,7 @@ public class PostFixture {
     public static final PostListResponseDto MOCK_POST_LIST_RESPONSE =
             PostListResponseDto.builder()
                     .postId(1L)
+                    .username("userA")
                     .writtenDate(WRITTEN_DATE)
                     .title(TITLE)
                     .emotion(EMOTION)

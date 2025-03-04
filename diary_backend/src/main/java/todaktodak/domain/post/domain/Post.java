@@ -17,6 +17,9 @@ import java.util.Objects;
 @Entity
 @NoArgsConstructor
 @Getter
+@Table(indexes = {
+        @Index(name = "diary_written_date_idx", columnList = "diary_id, written_date")
+})
 public class Post extends BaseEntity {
 
     @Id
@@ -41,11 +44,10 @@ public class Post extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private Emotion emotion;
 
-    @Column(name = "is_published")
+    @Column(name = "is_published", columnDefinition = "TINYINT(1)")
     private Boolean isPublished;
 
-    @Formula("(select count(*) from post_like pl where pl.post_id=id)")
-    @Column(name = "like_count")
+    @Formula("(select count(*) from post_like pl where pl.post_id=post_id)")
     private int likeCount;
 
     @ManyToOne(fetch = FetchType.LAZY)

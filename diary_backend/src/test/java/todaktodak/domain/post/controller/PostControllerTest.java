@@ -141,6 +141,7 @@ class PostControllerTest {
                         responseFields(
                                 fieldWithPath("data").type(JsonFieldType.ARRAY).description("응답 데이터"),
                                 fieldWithPath("data[].postId").type(JsonFieldType.NUMBER).description("일기 Id"),
+                                fieldWithPath("data[].username").type(JsonFieldType.STRING).description("작성자"),
                                 fieldWithPath("data[].writtenDate").type(JsonFieldType.STRING).description("일기 작성일"),
                                 fieldWithPath("data[].title").type(JsonFieldType.STRING).description("일기 제목"),
                                 fieldWithPath("data[].emotion").type(JsonFieldType.STRING).description("그날의 감정"),
@@ -149,6 +150,7 @@ class PostControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json;charset=UTF-8"))
                 .andExpect(jsonPath("$.data[0].postId").value(MOCK_POST_LIST_RESPONSE.getPostId()))
+                .andExpect(jsonPath("$.data[0].username").value(MOCK_POST_LIST_RESPONSE.getUsername()))
                 .andExpect(jsonPath("$.data[0].writtenDate").value(MOCK_POST_LIST_RESPONSE.getWrittenDate()))
                 .andExpect(jsonPath("$.data[0].title").value(MOCK_POST_LIST_RESPONSE.getTitle()))
                 .andExpect(jsonPath("$.data[0].emotion").value(MOCK_POST_LIST_RESPONSE.getEmotion()))
@@ -175,6 +177,7 @@ class PostControllerTest {
         resultActions.andDo(document("post/getPostListByDate", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint()),
                         responseFields(
                                 fieldWithPath("data").type(JsonFieldType.ARRAY).description("응답 데이터"),
+                                fieldWithPath("data[].username").type(JsonFieldType.STRING).description("작성자"),
                                 fieldWithPath("data[].postId").type(JsonFieldType.NUMBER).description("일기 Id"),
                                 fieldWithPath("data[].writtenDate").type(JsonFieldType.STRING).description("일기 작성일"),
                                 fieldWithPath("data[].title").type(JsonFieldType.STRING).description("일기 제목"),
@@ -184,6 +187,7 @@ class PostControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json;charset=UTF-8"))
                 .andExpect(jsonPath("$.data[0].postId").value(MOCK_POST_LIST_RESPONSE.getPostId()))
+                .andExpect(jsonPath("$.data[0].username").value(MOCK_POST_LIST_RESPONSE.getUsername()))
                 .andExpect(jsonPath("$.data[0].writtenDate").value(MOCK_POST_LIST_RESPONSE.getWrittenDate()))
                 .andExpect(jsonPath("$.data[0].title").value(MOCK_POST_LIST_RESPONSE.getTitle()))
                 .andExpect(jsonPath("$.data[0].emotion").value(MOCK_POST_LIST_RESPONSE.getEmotion()))

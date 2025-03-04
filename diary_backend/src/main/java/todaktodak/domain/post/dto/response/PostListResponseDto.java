@@ -10,6 +10,7 @@ import java.time.LocalDate;
 @Getter
 public class PostListResponseDto {
     private Long postId;
+    private String username;
     private String writtenDate;
     private String title;
     private String emotion;
@@ -17,8 +18,9 @@ public class PostListResponseDto {
 
 
     @Builder
-    public PostListResponseDto(Long postId, LocalDate writtenDate, String title, Emotion emotion, Boolean isPublished) {
+    public PostListResponseDto(Long postId, String username, LocalDate writtenDate, String title, Emotion emotion, Boolean isPublished) {
         this.postId = postId;
+        this.username = username;
         this.writtenDate = writtenDate.toString();
         this.title = title;
         this.emotion = emotion.name();
@@ -29,6 +31,7 @@ public class PostListResponseDto {
     public static PostListResponseDto of(Post post) {
         return PostListResponseDto.builder()
                 .postId(post.getId())
+                .username(post.getUser().getUsername())
                 .writtenDate(post.getWrittenDate())
                 .title(post.getTitle())
                 .emotion(post.getEmotion())

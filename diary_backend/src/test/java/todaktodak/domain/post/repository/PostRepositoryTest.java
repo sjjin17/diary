@@ -62,8 +62,12 @@ class PostRepositoryTest {
 
         postRepository.saveAll(List.of(tempPostByUserA, tempPostByUserB, finalPostByUserA, finalPostByUserB, postWrittenInJanuary));
 
+        LocalDate startDate = LocalDate.of(2025, 02, 1);
+        LocalDate endDate = LocalDate.of(2025, 03, 1);
+
+
         // when
-        List<Post> postList = postRepository.findPostsByDiaryIdAndMonth(userA.getId(), publicDiary.getId(), 2025, 2);
+        List<Post> postList = postRepository.findPostsByDiaryIdAndMonth(userA.getId(), publicDiary.getId(), startDate, endDate);
 
         // then
         assertThat(postList.size()).isEqualTo(3);
@@ -90,7 +94,7 @@ class PostRepositoryTest {
         postRepository.saveAll(List.of(tempPostByUserA, tempPostByUserB, finalPostByUserA, finalPostByUserB));
 
         // when
-        List<Post> postList = postRepository.findPostsByDiaryIdAndWrittenDate(userA.getId(), publicDiary.getId(), LocalDate.parse("2025-02-16"));
+        List<Post> postList = postRepository.findPostsByDiaryIdAndWrittenDate(userB.getId(), publicDiary.getId(), LocalDate.parse("2025-02-16"));
 
         // then
         assertThat(postList.size()).isEqualTo(2);

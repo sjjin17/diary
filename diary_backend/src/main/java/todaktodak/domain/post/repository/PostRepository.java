@@ -9,10 +9,10 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface PostRepository extends JpaRepository<Post, Long> {
-    @Query("select p from Post p where p.diary.id=(:diaryId) and year(p.writtenDate) = (:year) and month(p.writtenDate) = :month and (p.user.id = :userId or p.isPublished = false)")
-    List<Post> findPostsByDiaryIdAndMonth(@Param("userId") Long userId, @Param("diaryId") Long diaryId, @Param("year") int year, @Param("month") int month);
+    @Query("select p from Post p where p.diary.id=(:diaryId) and p.writtenDate >= (:startDate) and p.writtenDate < (:endDate) and (p.user.id = :userId or p.isPublished = true)")
+    List<Post> findPostsByDiaryIdAndMonth(@Param("userId") Long userId, @Param("diaryId") Long diaryId, @Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
 
-    @Query("select p from Post p where p.diary.id = (:diaryId) and p.writtenDate = (:writtenDate) and (p.user.id = (:userId) or p.isPublished = false)")
+    @Query("select p from Post p where p.diary.id = (:diaryId) and p.writtenDate = (:writtenDate) and (p.user.id = (:userId) or p.isPublished = true)")
     List<Post> findPostsByDiaryIdAndWrittenDate(@Param("userId") Long userId, @Param("diaryId") Long diaryId, @Param("writtenDate") LocalDate writtenDate);
 
 }

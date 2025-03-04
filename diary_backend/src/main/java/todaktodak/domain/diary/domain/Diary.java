@@ -26,7 +26,7 @@ public class Diary extends BaseEntity {
     @Column(name="title")
     private String title;
 
-    @Column(name="is_shared")
+    @Column(name="is_shared", columnDefinition = "TINYINT(1)")
     private Boolean isShared;
 
     @Column(name="thumbnail")
