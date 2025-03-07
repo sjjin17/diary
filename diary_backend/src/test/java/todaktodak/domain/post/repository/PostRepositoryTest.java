@@ -11,6 +11,7 @@ import todaktodak.domain.diary.domain.Diary;
 import todaktodak.domain.diary.fixture.DiaryFixture;
 import todaktodak.domain.diary.repository.DiaryRepository;
 import todaktodak.domain.post.domain.Post;
+import todaktodak.domain.post.dto.PostAndUserDto;
 import todaktodak.domain.post.fixture.PostFixture;
 import todaktodak.domain.user.domain.SocialType;
 import todaktodak.domain.user.domain.User;
@@ -67,7 +68,7 @@ class PostRepositoryTest {
 
 
         // when
-        List<Post> postList = postRepository.findPostsByDiaryIdAndMonth(userA.getId(), publicDiary.getId(), startDate, endDate);
+        List<PostAndUserDto> postList = postRepository.findPostsByDiaryIdAndMonth(userA.getId(), publicDiary.getId(), startDate, endDate);
 
         // then
         assertThat(postList.size()).isEqualTo(3);
@@ -94,7 +95,7 @@ class PostRepositoryTest {
         postRepository.saveAll(List.of(tempPostByUserA, tempPostByUserB, finalPostByUserA, finalPostByUserB));
 
         // when
-        List<Post> postList = postRepository.findPostsByDiaryIdAndWrittenDate(userB.getId(), publicDiary.getId(), LocalDate.parse("2025-02-16"));
+        List<PostAndUserDto> postList = postRepository.findPostsByDiaryIdAndWrittenDate(userB.getId(), publicDiary.getId(), LocalDate.parse("2025-02-16"));
 
         // then
         assertThat(postList.size()).isEqualTo(2);

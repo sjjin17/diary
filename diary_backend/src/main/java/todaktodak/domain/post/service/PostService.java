@@ -7,6 +7,7 @@ import org.springframework.util.StopWatch;
 import todaktodak.domain.diary.domain.Diary;
 import todaktodak.domain.diary.repository.DiaryRepository;
 import todaktodak.domain.post.domain.Post;
+import todaktodak.domain.post.dto.PostAndUserDto;
 import todaktodak.domain.post.dto.request.PostCreateRequestDto;
 import todaktodak.domain.post.dto.request.PostUpdateRequestDto;
 import todaktodak.domain.post.dto.response.PostDetailResponseDto;
@@ -41,12 +42,12 @@ public class PostService {
     public List<PostListResponseDto> getPostsByMonth(Long userId, Long diaryId, int year, int month) {
         LocalDate startDate = LocalDate.of(year, month, 1);
         LocalDate endDate = LocalDate.of(year, month+1, 1);
-        List<Post> postList = postRepository.findPostsByDiaryIdAndMonth(userId, diaryId, startDate, endDate);
+        List<PostAndUserDto> postList = postRepository.findPostsByDiaryIdAndMonth(userId, diaryId, startDate, endDate);
         return postList.stream().map(PostListResponseDto::of).collect(Collectors.toList());
     }
 
     public List<PostListResponseDto> getPostsByDate(Long userId, Long diaryId, LocalDate writtenDate) {
-        List<Post> postList = postRepository.findPostsByDiaryIdAndWrittenDate(userId, diaryId, writtenDate);
+        List<PostAndUserDto> postList = postRepository.findPostsByDiaryIdAndWrittenDate(userId, diaryId, writtenDate);
         return postList.stream().map(PostListResponseDto::of).collect(Collectors.toList());
     }
 
