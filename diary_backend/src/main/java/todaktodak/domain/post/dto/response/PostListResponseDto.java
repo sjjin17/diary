@@ -18,7 +18,7 @@ public class PostListResponseDto {
 
 
     @Builder
-    public PostListResponseDto(Long postId, String username, LocalDate writtenDate, String title, Emotion emotion, Boolean isPublished) {
+    public PostListResponseDto(Long postId, String username, String writtenDate, String title, Emotion emotion, Boolean isPublished) {
         this.postId = postId;
         this.username = username;
         this.writtenDate = writtenDate.toString();
@@ -32,7 +32,7 @@ public class PostListResponseDto {
         return PostListResponseDto.builder()
                 .postId(post.getId())
                 .username(post.getUser().getUsername())
-                .writtenDate(post.getWrittenDate())
+                .writtenDate(post.getWrittenDate().toString())
                 .title(post.getTitle())
                 .emotion(post.getEmotion())
                 .isPublished(post.getIsPublished())

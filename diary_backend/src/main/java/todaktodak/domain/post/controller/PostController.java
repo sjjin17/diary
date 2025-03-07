@@ -58,6 +58,12 @@ public class PostController {
                 .body(new CommonResponse<>(postService.deletePost(userId, diaryId, postId)));
     }
 
+    @GetMapping("/{postId}")
+    public ResponseEntity<? extends BasicResponse> getPostDetail(@PathVariable Long diaryId, @PathVariable Long postId) {
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(new CommonResponse<>(postService.getPostDetail(postId)));
+    }
+
 
 
 }

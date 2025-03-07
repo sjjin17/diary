@@ -67,3 +67,16 @@ include::{snippets}/post/deletePost/http-request.adoc[]
 include::{snippets}/post/deletePost/http-response.adoc[]
 - Response body
 include::{snippets}/post/deletePost/response-fields.adoc[]
+
+
+[[get-post-detail]]
+== 일기 상세 조회
+
+=== Request
+include::{snippets}/post/getPostDetail/http-request.adoc[]
+
+=== Response
+include::{snippets}/post/getPostDetail/http-response.adoc[]
+
+- Response body
+include::{snippets}/post/getPostDetail/response-fields.adoc[]

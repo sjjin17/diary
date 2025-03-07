@@ -9,6 +9,7 @@ import todaktodak.domain.diary.repository.DiaryRepository;
 import todaktodak.domain.post.domain.Post;
 import todaktodak.domain.post.dto.request.PostCreateRequestDto;
 import todaktodak.domain.post.dto.request.PostUpdateRequestDto;
+import todaktodak.domain.post.dto.response.PostDetailResponseDto;
 import todaktodak.domain.post.dto.response.PostListResponseDto;
 import todaktodak.domain.post.repository.PostRepository;
 import todaktodak.domain.user.domain.User;
@@ -72,6 +73,15 @@ public class PostService {
             throw new CustomException(ErrorCode.NO_ACCESS);
         }
     }
+
+    public PostDetailResponseDto getPostDetail(Long postId) {
+        Post post = postRepository.findById(postId).orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_POST));
+        return PostDetailResponseDto.of(post);
+    }
+
+
+
+
 
 
 }

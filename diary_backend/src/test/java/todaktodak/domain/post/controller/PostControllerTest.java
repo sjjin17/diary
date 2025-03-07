@@ -259,4 +259,46 @@ class PostControllerTest {
 
     }
 
+    @Test
+    @WithMockCustomUser
+    void 일기_상세_조회() throws Exception {
+        // given
+        Long diaryId = 1L;
+        Long postId = 1L;
+        given(postService.getPostDetail(anyLong())).willReturn(MOCK_POST_DETAIL_RESPONSE);
+
+        // when
+        ResultActions resultActions = mockMvc.perform(
+                get("/diaries/{diaryId}/posts/{postId}", diaryId, postId)
+                        .header(HttpHeaders.AUTHORIZATION, ACCESS_TOKEN_PREFIX + "accessToken"));
+
+        // then
+        resultActions.andDo(document("post/getPostDetail", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint()),
+                        responseFields(
+                                fieldWithPath("data").type(JsonFieldType.OBJECT).description("응답 데이터"),
+                                fieldWithPath("data.postId").type(JsonFieldType.NUMBER).description("일기 Id"),
+                                fieldWithPath("data.writtenDate").type(JsonFieldType.STRING).description("일기 작성일"),
+                                fieldWithPath("data.title").type(JsonFieldType.STRING).description("일기 제목"),
+                                fieldWithPath("data.content").type(JsonFieldType.STRING).description("일기 내용"),
+                                fieldWithPath("data.weather").type(JsonFieldType.STRING).description("날씨"),
+                                fieldWithPath("data.emotion").type(JsonFieldType.STRING).description("그날의 감정"),
+                                fieldWithPath("data.isPublished").type(JsonFieldType.BOOLEAN).description("최종 저장 여부"),
+                                fieldWithPath("data.likeCount").type(JsonFieldType.NUMBER).description("좋아요수"),
+                                fieldWithPath("data.imageList").type(JsonFieldType.ARRAY).description("이미지 리스트"),
+                                fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("성공 여부"))))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andExpect(jsonPath("$.data.postId").value(MOCK_POST_DETAIL_RESPONSE.getPostId()))
+                .andExpect(jsonPath("$.data.writtenDate").value(MOCK_POST_DETAIL_RESPONSE.getWrittenDate()))
+                .andExpect(jsonPath("$.data.title").value(MOCK_POST_DETAIL_RESPONSE.getTitle()))
+                .andExpect(jsonPath("$.data.content").value(MOCK_POST_DETAIL_RESPONSE.getContent()))
+                .andExpect(jsonPath("$.data.weather").value(MOCK_POST_DETAIL_RESPONSE.getWeather()))
+                .andExpect(jsonPath("$.data.emotion").value(MOCK_POST_DETAIL_RESPONSE.getEmotion()))
+                .andExpect(jsonPath("$.data.isPublished").value(MOCK_POST_DETAIL_RESPONSE.getIsPublished()))
+                .andExpect(jsonPath("$.data.likeCount").value(MOCK_POST_DETAIL_RESPONSE.getLikeCount()))
+                .andExpect(jsonPath("$.data.imageList").value(MOCK_POST_DETAIL_RESPONSE.getImageList()))
+                .andExpect(jsonPath("$.success").value(true));
+
+    }
+
 }
