@@ -13,6 +13,7 @@ import todaktodak.domain.diary.fixture.DiaryFixture;
 import todaktodak.domain.diary.repository.DiaryRepository;
 import todaktodak.domain.post.domain.Post;
 import todaktodak.domain.post.dto.request.PostUpdateRequestDto;
+import todaktodak.domain.post.dto.response.PostDetailResponseDto;
 import todaktodak.domain.post.fixture.PostFixture;
 import todaktodak.domain.post.repository.PostRepository;
 import todaktodak.domain.user.domain.SocialType;
@@ -22,6 +23,7 @@ import todaktodak.domain.user.repository.UserRepository;
 import todaktodak.global.WithMockCustomUser;
 import todaktodak.global.exception.CustomException;
 
+import java.time.LocalDate;
 import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -98,8 +100,6 @@ class PostServiceTest {
         assertThrows(CustomException.class, () -> postService.updatePost(userId, diaryId, postId, mockPostUpdateRequest), "No access");
 
     }
-
-
 
 
 }

@@ -1,8 +1,10 @@
 package todaktodak.domain.post.domain;
 
 import jakarta.persistence.*;
+import lombok.Getter;
 
 @Entity
+@Getter
 public class PostImage {
 
     @Id
