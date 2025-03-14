@@ -284,7 +284,6 @@ class PostControllerTest {
                                 fieldWithPath("data.emotion").type(JsonFieldType.STRING).description("그날의 감정"),
                                 fieldWithPath("data.isPublished").type(JsonFieldType.BOOLEAN).description("최종 저장 여부"),
                                 fieldWithPath("data.likeCount").type(JsonFieldType.NUMBER).description("좋아요수"),
-                                fieldWithPath("data.imageList").type(JsonFieldType.ARRAY).description("이미지 리스트"),
                                 fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("성공 여부"))))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json;charset=UTF-8"))
@@ -296,7 +295,6 @@ class PostControllerTest {
                 .andExpect(jsonPath("$.data.emotion").value(MOCK_POST_DETAIL_RESPONSE.getEmotion()))
                 .andExpect(jsonPath("$.data.isPublished").value(MOCK_POST_DETAIL_RESPONSE.getIsPublished()))
                 .andExpect(jsonPath("$.data.likeCount").value(MOCK_POST_DETAIL_RESPONSE.getLikeCount()))
-                .andExpect(jsonPath("$.data.imageList").value(MOCK_POST_DETAIL_RESPONSE.getImageList()))
                 .andExpect(jsonPath("$.success").value(true));
 
     }

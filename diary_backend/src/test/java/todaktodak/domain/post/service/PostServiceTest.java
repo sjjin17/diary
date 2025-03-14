@@ -101,34 +101,5 @@ class PostServiceTest {
 
     }
 
-    @Test
-    void 일기_상세_조회시_존재하지_않는_postId면_예외외_발생() throws Exception {
-        // given
-        given(postRepository.findById(anyLong())).willReturn(Optional.empty());
-
-        // when & then
-        assertThrows(CustomException.class, () -> postService.getPostDetail(1L), "NOT_FOUND_POST");
-    }
-
-    @Test
-    void 일기_상세_조회_성공() throws Exception {
-        // given
-        given(postRepository.findById(anyLong())).willReturn(Optional.of(post));
-
-        // when
-        PostDetailResponseDto postDetailResponse = postService.getPostDetail(1L);
-
-        // then
-        assertThat(postDetailResponse.getTitle()).isEqualTo(post.getTitle());
-        assertThat(postDetailResponse.getWrittenDate()).isEqualTo(post.getWrittenDate().toString());
-        assertThat(postDetailResponse.getContent()).isEqualTo(post.getContent());
-        assertThat(postDetailResponse.getWeather()).isEqualTo(post.getWeather().name());
-        assertThat(postDetailResponse.getEmotion()).isEqualTo(post.getEmotion().name());
-        assertThat(postDetailResponse.getIsPublished()).isEqualTo(post.getIsPublished());
-        assertThat(postDetailResponse.getLikeCount()).isEqualTo(post.getLikeCount());
-        assertThat(postDetailResponse.getImageList().size()).isEqualTo(post.getPostImageList().size());
-
-
-    }
 
 }

@@ -47,8 +47,8 @@ public class Post extends BaseEntity {
     @Column(name = "is_published", columnDefinition = "TINYINT(1)")
     private Boolean isPublished;
 
-    @Formula("(select count(*) from post_like pl where pl.post_id=post_id)")
-    private int likeCount;
+//    @Formula("(select count(*) from post_like pl where pl.post_id=post_id)")
+//    private int likeCount;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="user_id")

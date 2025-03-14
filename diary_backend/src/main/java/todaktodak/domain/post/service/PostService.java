@@ -7,6 +7,7 @@ import org.springframework.util.StopWatch;
 import todaktodak.domain.diary.domain.Diary;
 import todaktodak.domain.diary.repository.DiaryRepository;
 import todaktodak.domain.post.domain.Post;
+import todaktodak.domain.post.dto.PostAndPostLikeDto;
 import todaktodak.domain.post.dto.PostAndUserDto;
 import todaktodak.domain.post.dto.request.PostCreateRequestDto;
 import todaktodak.domain.post.dto.request.PostUpdateRequestDto;
@@ -76,8 +77,8 @@ public class PostService {
     }
 
     public PostDetailResponseDto getPostDetail(Long postId) {
-        Post post = postRepository.findById(postId).orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_POST));
-        return PostDetailResponseDto.of(post);
+        PostAndPostLikeDto postAndPostLikeDto = postRepository.findPostAndLikeById(postId).orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_POST));
+        return PostDetailResponseDto.of(postAndPostLikeDto);
     }
 
 

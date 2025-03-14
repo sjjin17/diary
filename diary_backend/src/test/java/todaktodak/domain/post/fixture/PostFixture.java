@@ -74,8 +74,7 @@ public class PostFixture {
                     .weather(WEATHER.name())
                     .emotion(EMOTION.name())
                     .isPublished(true)
-                    .likeCount(0)
-                    .imageList(new ArrayList<>())
+                    .likeCount(0L)
                     .build();
 
 

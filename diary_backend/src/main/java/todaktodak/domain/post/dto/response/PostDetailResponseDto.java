@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Getter;
 import todaktodak.domain.post.domain.Post;
 import todaktodak.domain.post.domain.PostImage;
+import todaktodak.domain.post.dto.PostAndPostLikeDto;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -18,11 +19,10 @@ public class PostDetailResponseDto {
     private String weather;
     private String emotion;
     private Boolean isPublished;
-    private int likeCount;
-    private List<String> imageList;
+    private Long likeCount;
 
     @Builder
-    public PostDetailResponseDto(Long postId, String writtenDate, String title, String content, String weather, String emotion, Boolean isPublished, int likeCount, List<String> imageList) {
+    public PostDetailResponseDto(Long postId, String writtenDate, String title, String content, String weather, String emotion, Boolean isPublished, Long likeCount) {
         this.postId = postId;
         this.writtenDate = writtenDate;
         this.title = title;
@@ -31,20 +31,18 @@ public class PostDetailResponseDto {
         this.emotion = emotion;
         this.isPublished = isPublished;
         this.likeCount = likeCount;
-        this.imageList = imageList;
     }
 
-    public static PostDetailResponseDto of(Post post) {
+    public static PostDetailResponseDto of(PostAndPostLikeDto postAndPostLike) {
         return PostDetailResponseDto.builder()
-                .postId(post.getId())
-                .writtenDate(post.getWrittenDate().toString())
-                .title(post.getTitle())
-                .content(post.getContent())
-                .weather(post.getWeather().name())
-                .emotion(post.getEmotion().name())
-                .isPublished(post.getIsPublished())
-                .likeCount(post.getLikeCount())
-                .imageList(post.getPostImageList().stream().map(PostImage::getImageUrl).collect(Collectors.toList()))
+                .postId(postAndPostLike.getPostId())
+                .writtenDate(postAndPostLike.getWrittenDate().toString())
+                .title(postAndPostLike.getTitle())
+                .content(postAndPostLike.getContent())
+                .weather(postAndPostLike.getWeather().name())
+                .emotion(postAndPostLike.getEmotion().name())
+                .isPublished(postAndPostLike.getIsPublished())
+                .likeCount(postAndPostLike.getLikeCount())
                 .build();
 
 
